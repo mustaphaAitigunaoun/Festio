@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Événements</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions a {
+            margin-right: 5px;
+        }
+
+        .actions a i {
+            margin-right: 3px;
+        }
+
+        .btn-sm i {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar Placeholder -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Content Section -->
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Liste des Événements</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="/evenements/nouveau" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Créer un Nouvel Événement
+        </a>
+    </div>
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Date</th>
+            <th scope="col">Lieu</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evenement : ${evenements}">
+            <td th:text="${evenement.titre}"></td>
+            <td th:text="${evenement.date}"></td>
+            <td th:text="${evenement.lieu}"></td>
+            <td class="text-center actions">
+                <a th:href="@{'/evenements/' + ${evenement.id}}" class="btn btn-info btn-sm" title="Voir les détails">
+                    <i class="fas fa-eye"></i> Voir
+                </a>
+                <a th:href="@{/evenements/modifier/{id}(id=${evenement.id})}" class="btn btn-warning btn-sm" title="Modifier">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a th:href="@{/evenements/supprimer/{id}(id=${evenement.id})}"
+                   class="btn btn-danger btn-sm"
+                   title="Supprimer"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
+            </td>
+        </tr>
+        <!-- If no events are present -->
+        <tr th:if="${#lists.isEmpty(evenements)}">
+            <td colspan="4" class="text-center text-muted">Aucun événement trouvé.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

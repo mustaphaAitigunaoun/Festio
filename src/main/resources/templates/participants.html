@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Participants</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .table-container {
+      border-radius: 15px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .table {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .table thead {
+      background-color: #007bff;
+      color: white;
+    }
+    .table tbody tr:hover {
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+    h2 {
+      font-weight: bold;
+      color: #333;
+    }
+    .icon-verified {
+      color: #28a745; /* Green for verified */
+    }
+    .icon-not-verified {
+      color: #dc3545; /* Red for not verified */
+    }
+  </style>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-5">Participants de l'Événement</h2>
+
+  <div class="row">
+    <!-- Registered Participants Table -->
+    <div class="col-md-6">
+      <div class="table-container">
+        <h3 class="text-center">Participants Inscrits</h3>
+        <table class="table table-hover table-bordered text-center">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Vérifié</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="participant, iterStat : ${registered}">
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${participant.nom}">Nom</td>
+            <td th:text="${participant.email}">Email</td>
+            <td>
+              <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isVerified}"></i>
+              <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isVerified}"></i>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(registered)}">
+            <td colspan="4" class="text-muted">Aucun participant inscrit</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Waitlisted Participants Table -->
+    <div class="col-md-6">
+      <div class="table-container">
+        <h3 class="text-center">Participants en Liste d'Attente</h3>
+        <table class="table table-hover table-bordered text-center">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Vérifié</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="participant, iterStat : ${waitlisted}">
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${participant.nom}">Nom</td>
+            <td th:text="${participant.email}">Email</td>
+            <td>
+              <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isVerified}"></i>
+              <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isVerified}"></i>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(waitlisted)}">
+            <td colspan="4" class="text-muted">Aucun participant en liste d'attente</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Event List Button -->
+  <div class="text-center mt-4">
+    <a th:href="@{/evenements}" class="btn btn-secondary">Retour aux Événements</a>
+  </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

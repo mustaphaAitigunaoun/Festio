@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer Événement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            border: none;
+            border-radius: 8px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        select.form-select {
+            border-radius: 8px;
+        }
+
+        /* Custom spacing */
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar Placeholder -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Content Section -->
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Créer un Nouvel Événement</h1>
+    <form th:action="@{/evenements}" method="post" th:object="${evenement}" class="row g-4">
+        <!-- First Line: Titre and Date -->
+        <div class="form-section row">
+            <div class="col-md-6">
+                <label for="titre" class="form-label">Titre</label>
+                <input id="titre" type="text" th:field="*{titre}" class="form-control" placeholder="Entrez le titre de l'événement" required />
+            </div>
+
+            <div class="col-md-6">
+                <label for="date" class="form-label">Date</label>
+                <input id="date" type="datetime-local" th:field="*{date}" class="form-control" required />
+            </div>
+        </div>
+
+        <!-- Second Line: Description -->
+        <div class="form-section">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" th:field="*{description}" class="form-control" rows="4" placeholder="Entrez une description de l'événement" required></textarea>
+        </div>
+
+        <!-- Third Line: Lieu and Capacité -->
+        <div class="form-section row">
+            <div class="col-md-6">
+                <label for="lieu" class="form-label">Lieu</label>
+                <select id="lieu" th:field="*{lieu}" class="form-select" required>
+                    <option value="" disabled selected>Sélectionnez une ville</option>
+                    <option value="Casablanca">Casablanca</option>
+                    <option value="Marrakech">Marrakech</option>
+                    <option value="Rabat">Rabat</option>
+                    <option value="Fès">Fès</option>
+                    <option value="Agadir">Agadir</option>
+                    <option value="Tanger">Tanger</option>
+                    <option value="Meknès">Meknès</option>
+                    <option value="Oujda">Oujda</option>
+                    <option value="Essaouira">Essaouira</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="capacite" class="form-label">Capacité</label>
+                <input id="capacite" type="number" th:field="*{capacite}" class="form-control" placeholder="Nombre maximum de participants" required />
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-success btn-lg px-4">Créer</button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        .logo {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .logo span:first-child {
+            color: #007bff; /* Blue */
+        }
+        .logo span:last-child {
+            color: #ff5722; /* Orange */
+        }
+    </style>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Brand -->
+        <div class="logo">
+            <a class="navbar-brand" href="/">
+                <span>Festi</span><span>o</span>
+            </a>
+        </div>
+
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/evenements}">Événements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Right Section (Dynamic User Options) -->
+            <ul class="navbar-nav">
+                <!-- If user is not logged in -->
+                <li class="nav-item" th:unless="${#authentication.authenticated}">
+                    <a class="nav-link" th:href="@{/login}">Se connecter</a>
+                </li>
+                <li class="nav-item" th:unless="${#authentication.authenticated}">
+                    <a class="nav-link btn btn-primary btn-sm text-white" th:href="@{/register}">S'inscrire</a>
+                </li>
+
+                <!-- If user is logged in -->
+                <li class="nav-item dropdown" th:if="${#authentication.authenticated}">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> <span th:text="${#authentication.name}">Utilisateur</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/profile}">Mon Profil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/settings}">Paramètres</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" th:href="@{/logout}">Se Déconnecter</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
