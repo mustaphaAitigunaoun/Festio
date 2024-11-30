@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme de Gestion d'Événements</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .logo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            text-align: center;
+        }
+        .logo span:first-child {
+            color: #007bff; /* Blue */
+        }
+        .logo span:last-child {
+            color: #ff5722; /* Orange */
+        }
+
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Hero Section -->
+<section class="bg-light py-5 text-center">
+    <div class="container">
+        <div class="logo">
+            <span>Festi</span><span>o</span>
+        </div>
+        <h1 class="display-5 fw-bold">Plateforme de Gestion d'Événements</h1>
+        <p class="lead">
+            Simplifiez la gestion de vos événements grâce à des outils performants pour organiser, inscrire des participants et gérer les paiements.
+        </p>
+        <div class="mt-4">
+            <a href="/login" class="btn btn-success btn-lg">Essayer Gratuitement</a>
+            <a href="/a-propos" class="btn btn-outline-secondary btn-lg">Voir les Fonctionnalités</a>
+        </div>
+    </div>
+</section>
+
+<!-- Objectives Section -->
+<section id="objectives" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Contexte et Objectifs</h2>
+        <p>
+            La gestion des événements est une tâche complexe nécessitant des outils efficaces pour organiser, inscrire des participants et gérer les paiements.
+        </p>
+        <ul>
+            <li>Concevoir une application robuste et intuitive.</li>
+            <li>Offrir une expérience fluide pour les participants.</li>
+            <li>Garantir sécurité, fiabilité et extensibilité avec des technologies modernes.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Fonctionnalités</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestion des événements</h5>
+                        <p class="card-text">Créez, modifiez et supprimez des événements avec des informations détaillées (titre, description, date, lieu, capacité).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Inscriptions des participants</h5>
+                        <p class="card-text">Suivez les participants inscrits et gérez les listes d’attente automatiquement.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Notifications automatiques</h5>
+                        <p class="card-text">Envoyez des emails automatiques pour confirmer l'inscription ou rappeler l'événement.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Paiements en ligne</h5>
+                        <p class="card-text">Intégrez une passerelle de paiement pour simplifier la gestion des paiements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 Gestion d'Événements. Tous droits réservés.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

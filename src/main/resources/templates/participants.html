@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Participants</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
@@ -17,6 +17,7 @@
     .table {
       border-radius: 10px;
       overflow: hidden;
+      font-size: 0.85rem; /* Reduced font size */
     }
     .table th, .table td {
       vertical-align: middle;
@@ -47,11 +48,29 @@
 <div class="container mt-5">
   <h2 class="text-center mb-5">Participants de l'Événement</h2>
 
+  <!-- Remarque Alert -->
+  <div class="alert alert-info">
+    <strong>Remarque:</strong> Veuillez effectuer le paiement pour confirmer votre inscription. Les participants qui n'effectuent pas leur paiement dans un délai de 24 heures seront supprimés.
+  </div>
+
+
+
   <div class="row">
     <!-- Registered Participants Table -->
     <div class="col-md-6">
       <div class="table-container">
         <h3 class="text-center">Participants Inscrits</h3>
+
+        <!-- Success Message Transfer -->
+        <div th:if="${success}" class="alert alert-success" role="alert">
+          <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+        </div>
+
+        <!-- Error Message Transfer -->
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle"></i> <span th:text="${error}"></span>
+        </div>
+
         <table class="table table-hover table-bordered text-center">
           <thead>
           <tr>
@@ -59,6 +78,8 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Vérifié</th>
+            <th>Payer</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody>
@@ -70,9 +91,25 @@
               <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isVerified}"></i>
               <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isVerified}"></i>
             </td>
+            <td>
+              <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isPayed}"></i>
+              <a sec:authorize="hasRole('ROLE_PARTICIPANT')" th:href="@{/payment}" th:if="${!participant.isPayed}" class="btn btn-sm btn-warning">
+                Payer
+              </a>
+              <i sec:authorize="hasRole('ROLE_ORGANISATEUR')" class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isPayed}"></i>
+            </td>
+            <td>
+              <a sec:authorize="hasRole('ROLE_ORGANISATEUR')"
+                 th:href="@{/evenements/participant/{participantId}(participantId=${participant.id})}"
+                 class="btn btn-danger btn-sm"
+                 title="Supprimer"
+                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce Participant ?')">
+                <i class="fas fa-trash"></i> Supprimer
+              </a>
+            </td>
           </tr>
           <tr th:if="${#lists.isEmpty(registered)}">
-            <td colspan="4" class="text-muted">Aucun participant inscrit</td>
+            <td colspan="6" class="text-muted">Aucun participant inscrit</td>
           </tr>
           </tbody>
         </table>
@@ -90,6 +127,8 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Vérifié</th>
+            <th>Payer</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody>
@@ -101,9 +140,23 @@
               <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isVerified}"></i>
               <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isVerified}"></i>
             </td>
+            <td>
+              <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isPayed}"></i>
+              <a th:href="@{/payment}" th:if="${!participant.isPayed}" class="btn btn-sm btn-warning">
+                Payer
+              </a>
+            </td>
+            <td>
+              <a sec:authorize="hasRole('ROLE_ORGANISATEUR')"
+                 th:href="@{/evenements/{eventId}/waitlist-to-registered/{participantId}(eventId=${participant.evenement.id}, participantId=${participant.id})}"
+                 class="btn btn-danger btn-sm"
+                 title="Devenir Participant">
+                <i class="bi bi-arrow-left"></i> Devenir Participant
+              </a>
+            </td>
           </tr>
           <tr th:if="${#lists.isEmpty(waitlisted)}">
-            <td colspan="4" class="text-muted">Aucun participant en liste d'attente</td>
+            <td colspan="6" class="text-muted">Aucun participant en liste d'attente</td>
           </tr>
           </tbody>
         </table>

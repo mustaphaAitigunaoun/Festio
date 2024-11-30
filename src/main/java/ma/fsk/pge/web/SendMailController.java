@@ -18,8 +18,8 @@ public class SendMailController {
     private ParticipantService participantService;
 
     @GetMapping("/verify-email")
-    public String verifyEmail(@RequestParam("participantId") Long participantId, Model model) {
-        Optional<Participant> optionalParticipant = Optional.ofNullable(participantService.findParticipantById(participantId));
+    public String verifyEmail(@RequestParam("participantNom") String participantNom, Model model) {
+        Optional<Participant> optionalParticipant = Optional.ofNullable(participantService.findParticipantByNom(participantNom));
 
         if (optionalParticipant.isPresent()) {
             Participant participant = optionalParticipant.get();

@@ -5,6 +5,8 @@ import ma.fsk.pge.entities.Participant;
 import ma.fsk.pge.repository.EvenementRepository;
 import ma.fsk.pge.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,14 @@ public class ParticipantService {
         return participantRepository.save(participant);
     }
 
+    public Participant findParticipantByNom(String nom) {
+        Participant participant = participantRepository.findByNom(nom);
+        if( participant == null ){
+            return null;
+        }
+        return participant;
+    }
+
     public Participant findParticipantById(Long id) {
         Participant participant = participantRepository.findById(id).orElse(null);
         if( participant == null ){
@@ -25,4 +35,10 @@ public class ParticipantService {
         }
         return participant;
     }
+
+    public void deleteParticipantById(Long id) {
+        participantRepository.deleteById(id);
+    }
+
+
 }

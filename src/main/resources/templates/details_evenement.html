@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails de l'Événement</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -47,27 +47,35 @@
         .event-info {
             display: flex;
             justify-content: space-between;
+            text-align: center;
             font-size: 1.2rem;
             color: #333;
             margin-top: 1rem;
         }
 
-        .event-info div {
+        .event-info > div {
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
         .event-info i {
-            margin-right: 10px;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
             color: #007bff;
+        }
+
+        .btn {
+            border-radius: 8px;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            text-align: center;
+            width: 200px;
         }
 
         .btn-primary {
             background-color: #28a745;
             border-color: #28a745;
-            border-radius: 8px;
-            padding: 10px 30px;
-            font-size: 1.1rem;
         }
 
         .btn-primary:hover {
@@ -78,14 +86,21 @@
         .btn-secondary {
             background-color: #6c757d;
             border-color: #6c757d;
-            border-radius: 8px;
-            padding: 10px 30px;
-            font-size: 1.1rem;
         }
 
         .btn-secondary:hover {
             background-color: #5a6268;
             border-color: #545b62;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
         }
 
         .footer {
@@ -115,25 +130,24 @@
             <!-- Event Info (Date, Location, and Capacity) -->
             <div class="event-info mt-5">
                 <div>
-                    <p>Date : </p> &nbsp; &nbsp;
+                    <i class="fas fa-calendar-alt"></i>
                     <div>
-                        <i class="fas fa-calendar-alt"></i> &nbsp; &nbsp;
+                        <strong>Date :</strong>
                         <span th:text="${evenement.date}">Event Date</span>
                     </div>
-
                 </div>
                 <div>
-                    <p>Location : </p> &nbsp; &nbsp;
+                    <i class="fas fa-map-marker-alt"></i>
                     <div>
-                        <i class="fas fa-map-marker-alt"></i> &nbsp; &nbsp;
+                        <strong>Location :</strong>
                         <span th:text="${evenement.lieu}">Event Location</span>
                     </div>
                 </div>
                 <div>
-                    <p>Capacity : </p> &nbsp; &nbsp;
+                    <i class="fas fa-users"></i>
                     <div>
-                        <i class="fas fa-users"></i>  &nbsp; &nbsp;
-                        <span th:text="${evenement.capacite}">Event Capacity</span> &nbsp; participants
+                        <strong>Capacity :</strong>
+                        <span th:text="${evenement.capacite}">Event Capacity</span> participants
                     </div>
                 </div>
             </div>
@@ -142,12 +156,10 @@
             <div class="mt-5 text-center">
                 <a th:href="@{/evenements}" class="btn btn-secondary">Retour à la liste</a>
                 <a th:href="@{/evenements/{eventId}/participants(eventId=${evenement.id})}" class="btn btn-primary">Participants</a>
-                <a th:href="@{/evenements/{eventId}/register(eventId=${evenement.id})}" class="btn btn-danger">S'inscrire Participant</a>
+                <a sec:authorize="hasRole('ROLE_PARTICIPANT')" th:href="@{/evenements/{eventId}/register(eventId=${evenement.id})}" class="btn btn-danger">S'inscrire</a>
             </div>
         </div>
     </div>
-
-
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>

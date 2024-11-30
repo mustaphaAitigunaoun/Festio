@@ -10,9 +10,11 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double montant;
-    private String methode;
-    private String statut;
+    private Double total;
+    private String currency;
+    private String method;
+    private String intent;
+    private String description;
 
     @OneToOne
     @JoinColumn(name = "participant_id")

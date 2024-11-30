@@ -25,8 +25,7 @@ public class EvenementService {
     }
 
     public Evenement obtenirEvenementParId(Long id) {
-        return evenementRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Événement non trouvé"));
+        return evenementRepository.findById(id).orElse(null);
     }
 
     public Evenement modifierEvenement(Long id, Evenement evenement) {
@@ -38,6 +37,7 @@ public class EvenementService {
         existant.setCapacite(evenement.getCapacite());
         return evenementRepository.save(existant);
     }
+
 
     public void supprimerEvenement(Long id) {
         evenementRepository.deleteById(id);

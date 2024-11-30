@@ -8,11 +8,13 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container mt-5">
     <h2 class="text-center">Inscription à l'Événement</h2>
-    <form th:action="@{/evenements/{eventId}/register(eventId=${evenement.id})}" method="post" class="row g-4 mt-4">
+    <!-- Response Message -->
+
+    <form th:action="@{/evenements/{eventId}/register/{participantNom}(eventId=${evenement.id},participantNom=${#authentication.name})}" method="post" class="row g-4 mt-4">
         <!-- Participant Name -->
         <div class="mb-3">
             <label for="nom" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="nom" name="nom" placeholder="Paricipant nom" required>
+            <input type="text" class="form-control" id="nom" name="nom" th:value="${#authentication.name}" readonly>
         </div>
 
         <!-- Participant Email -->
@@ -33,7 +35,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+        <button type="submit" class="btn btn-primary w-90">S'inscrire</button>
     </form>
 
     <!-- Back to Event List -->
@@ -41,8 +43,7 @@
         <a th:href="@{/evenements}" class="btn btn-secondary">Retour aux Événements</a>
     </div>
 
-    <!-- Response Message -->
-    <div th:if="${message}" class="alert alert-info mt-3" th:text="${message}"></div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

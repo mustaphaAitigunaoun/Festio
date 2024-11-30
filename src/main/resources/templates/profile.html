@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile du Participant</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .profile-container {
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .profile-header {
+            font-weight: bold;
+            color: #333;
+        }
+        .icon-verified {
+            color: #28a745; /* Green for verified */
+        }
+        .icon-not-verified {
+            color: #dc3545; /* Red for not verified */
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <div class="profile-container">
+        <h2 class="text-center profile-header">Profile du Participant</h2>
+        <hr>
+
+        <div class="row">
+            <!-- Participant Info -->
+            <div class="col-md-6">
+                <h4>Informations Personnelles</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>ID : </strong><span th:text="${participant.id}"></span></li>
+                    <li class="list-group-item"><strong>Nom : </strong><span th:text="${participant.nom}"></span></li>
+                    <li class="list-group-item"><strong>Email : </strong><span th:text="${participant.email}"></span></li>
+                    <li class="list-group-item">
+                        <strong>Vérifié : </strong>
+                        <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isVerified}"></i>
+                        <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isVerified}"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Paiement : </strong>
+                        <i class="bi bi-check-circle-fill icon-verified" th:if="${participant.isPayed}"></i>
+                        <i class="bi bi-x-circle-fill icon-not-verified" th:if="${!participant.isPayed}"></i>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Liste d'attente : </strong>
+                        <span th:text="${participant.isWaitlisted ? 'Oui' : 'Non'}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Event Info -->
+            <div class="col-md-6">
+                <h4>Informations de l'Événement</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>ID de l'Événement : </strong>
+                        <span th:text="${participant.evenement.id}">ID</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Nom de l'Événement : </strong>
+                        <span th:text="${participant.evenement.nom}">Nom de l'Événement</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <!-- Redirect to Payment Page if Not Paid -->
+            <div th:if="${!participant.isPayed}">
+                <p class="text-danger">Veuillez effectuer votre paiement pour compléter votre inscription.</p>
+                <a th:href="@{/payment}" class="btn btn-primary">Payer Maintenant</a>
+            </div>
+
+            <!-- Back to Events -->
+            <a th:href="@{/evenements}" class="btn btn-secondary">Retour aux Événements</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

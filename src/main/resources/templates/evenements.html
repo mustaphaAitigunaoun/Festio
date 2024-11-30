@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +63,7 @@
 <!-- Content Section -->
 <div class="container mt-4">
     <h1 class="text-center mb-4">Liste des Événements</h1>
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div sec:authorize="hasRole('ROLE_ORGANISATEUR')" class="d-flex justify-content-between align-items-center mb-3">
         <a href="/evenements/nouveau" class="btn btn-primary">
             <i class="fas fa-plus"></i> Créer un Nouvel Événement
         </a>
@@ -84,10 +86,10 @@
                 <a th:href="@{'/evenements/' + ${evenement.id}}" class="btn btn-info btn-sm" title="Voir les détails">
                     <i class="fas fa-eye"></i> Voir
                 </a>
-                <a th:href="@{/evenements/modifier/{id}(id=${evenement.id})}" class="btn btn-warning btn-sm" title="Modifier">
+                <a sec:authorize="hasRole('ROLE_ORGANISATEUR')" th:href="@{/evenements/modifier/{id}(id=${evenement.id})}" class="btn btn-warning btn-sm" title="Modifier">
                     <i class="fas fa-edit"></i> Modifier
                 </a>
-                <a th:href="@{/evenements/supprimer/{id}(id=${evenement.id})}"
+                <a sec:authorize="hasRole('ROLE_ORGANISATEUR')" th:href="@{/evenements/supprimer/{id}(id=${evenement.id})}"
                    class="btn btn-danger btn-sm"
                    title="Supprimer"
                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
